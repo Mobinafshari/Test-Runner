@@ -1,0 +1,15 @@
+{
+  "name": "test-runner",
+  "version": "0.0.1",
+  "description": "Test-Runner like uvu",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "Test-Runner"
+  ],
+  "author": "Mobin",
+  "license": "ISC"
+}
