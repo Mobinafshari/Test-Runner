@@ -4,6 +4,7 @@ import { parse } from "url";
 
 const server = http.createServer((req, res) => {
   const { pathname, query } = parse(req.url, true);
+  console.log(pathname, query);
   const a = Number(query.a);
   const b = Number(query.b);
 
