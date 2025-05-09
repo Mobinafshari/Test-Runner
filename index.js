@@ -14,10 +14,21 @@ export function expect(value) {
         );
       }
     },
-    notToBe(expected) {
-      if (value === expected) {
-        throw new Error(`${value} is equal to ${expected}`);
-      }
+    not: {
+      toBe(expected) {
+        if (value === expected) {
+          throw new Error(`Expected ${value} not to be ${expected}`);
+        }
+      },
+      toEqual(expected) {
+        if (JSON.stringify(value) === JSON.stringify(expected)) {
+          throw new Error(
+            `Expected ${JSON.stringify(value)} not to equal ${JSON.stringify(
+              expected
+            )}`
+          );
+        }
+      },
     },
   };
 }
