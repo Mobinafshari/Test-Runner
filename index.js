@@ -1,3 +1,5 @@
+import isEqual from "lodash.isequal";
+
 export function expect(value) {
   return {
     toBe(expected) {
@@ -6,7 +8,7 @@ export function expect(value) {
       }
     },
     toEqual(expected) {
-      if (JSON.stringify(value) !== JSON.stringify(expected)) {
+      if (!isEqual(value, expected)) {
         throw new Error(
           `Expected ${JSON.stringify(value)} to equal ${JSON.stringify(
             expected
@@ -21,7 +23,7 @@ export function expect(value) {
         }
       },
       toEqual(expected) {
-        if (JSON.stringify(value) === JSON.stringify(expected)) {
+        if (isEqual(value, expected)) {
           throw new Error(
             `Expected ${JSON.stringify(value)} not to equal ${JSON.stringify(
               expected
