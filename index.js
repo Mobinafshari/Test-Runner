@@ -32,11 +32,12 @@ export function expect(value) {
     },
   };
 }
+export const tests = new Set();
+
 export function Test(name, fn) {
   try {
-    fn();
-    console.log(`${name} tests passed!`);
+    tests.add({ name, fn });
   } catch (error) {
-    throw new Error(`${name} test failed!`);
+    throw new Error(`Test Process failed bcs ${error}`);
   }
 }
