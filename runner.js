@@ -21,13 +21,18 @@ await loadTestFiles(testDir);
 function executeTests(tests) {
   const promises = Array.from(tests).map(
     (test) =>
-      new Promise((res, rej) => {
+      new Promise(async (res, rej) => {
         try {
-          res(test.fn());
+          const result = test.fn();
+          if (result instanceof Promise) {
+            res(await result);
+          } else {
+            res(result);
+          }
           console.log(`${test.name} Executed Successfully!`);
         } catch (error) {
           rej(error);
-          console.error(`${test.name} Execution Failed:`, error);
+          console.error(`❌ ${test.name} Execution Failed:`, error);
         }
       })
   );
