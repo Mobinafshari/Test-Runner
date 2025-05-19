@@ -1,5 +1,11 @@
 import isEqual from "lodash.isequal";
 
+export function beforeEach(fn){
+  OtherFunctions.set('beforeEach' , fn)
+}
+export function afterEach(fn){
+  OtherFunctions.set('afterEach' , fn)
+}
 export function expect(value) {
   return {
     toBe(expected) {
@@ -35,6 +41,7 @@ export function expect(value) {
   };
 }
 export const tests = new Set();
+export const OtherFunctions = new Map()
 
 export function Test(name, fn) {
   try {

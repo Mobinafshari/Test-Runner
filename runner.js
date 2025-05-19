@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath, pathToFileURL } from "url";
-import { tests } from "./index.js";
+import { tests , OtherFunctions } from "./index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const testDir = path.join(__dirname, "test");
@@ -23,21 +23,33 @@ function executeTests(tests) {
     (test) =>
       new Promise(async (res, rej) => {
         try {
+          const before = OtherFunctions.get("beforeEach");
+          if (before){ 
+            if(before instanceof Promise){
+              await before()
+            };
+            before()
+            }
           const result = test.fn();
           if (result instanceof Promise) {
-            res(await result);
+            res(await result)
           } else {
-            res(result);
+            res(result)
           }
-          console.log(`${test.name} Executed Successfully!`);
+          console.log(`✅ ${test.name} Executed Successfully!`);
         } catch (error) {
           rej(error);
           console.error(`❌ ${test.name} Execution Failed:`, error);
+        }finally{
+          if(OtherFunctions.get("afterEach")){
+            const after = OtherFunctions.get("afterEach");
+            if (after) await after(); 
+          }
         }
       })
   );
 
   Promise.allSettled(promises).then(() => {
-    console.log("✅ All tests finished Successfully! Yaay");
+    console.log("All tests finished");
   });
 }
