@@ -1,10 +1,13 @@
 import isEqual from "lodash.isequal";
 
-export function beforeEach(fn){
-  OtherFunctions.set('beforeEach' , fn)
+export function beforeEach(fn) {
+  if (typeof fn !== "function") throw new Error("beforeEach must receive a function");
+  hooks.beforeEach.push(fn);
 }
-export function afterEach(fn){
-  OtherFunctions.set('afterEach' , fn)
+
+export function afterEach(fn) {
+  if (typeof fn !== "function") throw new Error("afterEach must receive a function");
+  hooks.afterEach.push(fn);
 }
 export function expect(value) {
   return {
